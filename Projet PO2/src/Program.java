@@ -1,5 +1,5 @@
-import view.View;
 import model.Model;
+import view.View;
 
 
 public final class Program {

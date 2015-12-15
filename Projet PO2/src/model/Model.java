@@ -9,7 +9,7 @@ import model.events.SelectionChangeEvent;
 
 public final class Model extends Observable {
 
-	private final Vector<Shape> shapes = new Vector<Shape>();
+	private final Vector<MyShape> shapes = new Vector<MyShape>();
 	private ShapeSelection shapeSelection; // remplacer par hashset ??
 	// ajouter selectedShape ?????? et effacer class ShapeSelection ???
 	
@@ -18,15 +18,15 @@ public final class Model extends Observable {
 		this.shapeSelection = new ShapeSelection();
 	}
 	
-	public Shape createShape() {
-		final Shape shape = new Shape();
+	public MyShape createShape() {
+		final MyShape shape = new MyShape();
 		this.shapes.add(shape);
 		this.setChanged(); 
 		this.notifyObservers(new CreateShapeEvent(this, shape));
 		return shape;
 	}
 	
-	public void deleteShape(final Shape shape) {
+	public void deleteShape(final MyShape shape) {
 		if (shape != null) {
 			if (shapeSelection.getSelectedShape() == shape)
 				shapeSelection.setSelectedShape(null);
@@ -36,11 +36,11 @@ public final class Model extends Observable {
 		}
 	}
 	
-	public Shape getShape(final int index) {
+	public MyShape getShape(final int index) {
 		return shapes.get(index);
 	}
 	
-	public Vector<Shape> getShapes() {
+	public Vector<MyShape> getShapes() {
 		return shapes;
 	}
 

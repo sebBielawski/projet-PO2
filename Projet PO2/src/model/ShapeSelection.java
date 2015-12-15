@@ -11,22 +11,22 @@ import model.events.SelectionChangeEvent;
 public final class ShapeSelection extends Observable implements Set<Integer> {
 
 	private final HashSet<Integer> set = new HashSet<Integer>();
-	private Shape selectedShape;
+	private MyShape selectedShape;
 	
 	public ShapeSelection() {
 		selectedShape = null;
 	}
 	
-	public ShapeSelection(final Collection<? extends Integer> c, final Shape selectedShape) {
+	public ShapeSelection(final Collection<? extends Integer> c, final MyShape selectedShape) {
 		addAll(c);
 		this.selectedShape = selectedShape;
 	}
 	
-	public Shape getSelectedShape() {
+	public MyShape getSelectedShape() {
 		return selectedShape;
 	}
 
-	public void setSelectedShape(final Shape selectedShape) {
+	public void setSelectedShape(final MyShape selectedShape) {
 		if (this.selectedShape != selectedShape) {
 			this.selectedShape = selectedShape;
 			this.setChanged();

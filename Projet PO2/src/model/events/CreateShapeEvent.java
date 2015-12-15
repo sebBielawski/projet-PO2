@@ -2,19 +2,19 @@ package model.events;
 
 import java.util.EventObject;
 
-import model.Shape;
+import model.MyShape;
 
 @SuppressWarnings("serial")
 public final class CreateShapeEvent extends EventObject {
  
-	private final Shape createdShape;
+	private final MyShape createdShape;
 	
-	public CreateShapeEvent(final Object source, final Shape createdShape) {
+	public CreateShapeEvent(final Object source, final MyShape createdShape) {
 		super(source);
 		this.createdShape = createdShape;
 	}
 
-	public Shape getCreatedShape() {
+	public MyShape getCreatedShape() {
 		return createdShape;
 	}
 }

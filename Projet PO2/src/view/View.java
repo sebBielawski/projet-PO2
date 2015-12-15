@@ -22,20 +22,19 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.ListCellRenderer;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import model.Model;
-import model.Shape;
+import model.MyShape;
+import model.Namable;
 import model.ShapeSelection;
 import model.events.CreateShapeEvent;
 import model.events.DeleteShapeEvent;
@@ -44,7 +43,7 @@ import model.events.DeleteShapeEvent;
 public final class View implements Observer {
 	
 	private final Model model;
-	private final DefaultListModel<Shape> listModel = new DefaultListModel<Shape>();
+	private final DefaultListModel<MyShape> listModel = new DefaultListModel<MyShape>();
 	private final PropertiesPanel propertiesPanel;
 	
 	public View(final Model model) {
@@ -123,28 +122,8 @@ public final class View implements Observer {
 		return propertiesPanel;
 	}
 	
-	private static JPanel createHierarchyPanel(final Model model, final DefaultListModel<Shape> listModel) {	
-		final JList<Shape> list = new JList<Shape>(listModel);
-		list.setOpaque(true);
-		list.setFocusable(false);
-		list.setCellRenderer(new ListCellRenderer<Shape>() {
-			@Override
-			public Component getListCellRendererComponent(JList<? extends Shape> list, Shape value, int index, boolean isSelected, boolean cellHasFocus) {
-				final JLabel label = new JLabel(value.getName(), JLabel.CENTER);
-				label.setOpaque(true);
-				
-				if (isSelected)
-					label.setBackground(Color.GREEN);			
-				else if (index >= 0) {
-					final Point p = list.getMousePosition();
-					if (p != null && list.locationToIndex(p) == index)
-						label.setBackground(Color.ORANGE);
-				}
-
-				return label;
-			}		
-		});
-
+	private static JPanel createHierarchyPanel(final Model model, final DefaultListModel<? extends Namable> listModel) {	
+		final OverviewList list = new OverviewList(model, listModel);
 		list.addMouseListener(new MouseAdapter() {
 			public void mouseExited(MouseEvent e) {
                 list.repaint();
@@ -169,7 +148,7 @@ public final class View implements Observer {
 				for (int i = e.getFirstIndex(); i <= e.getLastIndex(); ++i)
 					if (list.isSelectedIndex(i))
 						selectedShapesIndices.add(new Integer(i));	
-				Shape selectedShape;
+				MyShape selectedShape;
 				if (selectedShapesIndices.size() != 1)
 					selectedShape = null;
 				else {
@@ -251,7 +230,7 @@ public final class View implements Observer {
 				if (arg0.getKeyChar() == 'c')
 					model.createShape();
 				if (arg0.getKeyChar() == 'd') {
-					final Shape selectedShape = model.getShapeSelection().getSelectedShape();
+					final MyShape selectedShape = model.getShapeSelection().getSelectedShape();
 					if (selectedShape != null)
 						model.deleteShape(selectedShape);
 				}			

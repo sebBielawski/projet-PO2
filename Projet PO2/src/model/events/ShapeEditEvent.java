@@ -2,19 +2,19 @@ package model.events;
 
 import java.util.EventObject;
 
-import model.Shape;
+import model.MyShape;
 
 @SuppressWarnings("serial")
 public final class ShapeEditEvent extends EventObject {
 
-	private final Shape editedShape;
+	private final MyShape editedShape;
 	
-	public ShapeEditEvent(final Object source, final Shape createdShape) {
+	public ShapeEditEvent(final Object source, final MyShape createdShape) {
 		super(source);
 		this.editedShape = createdShape;
 	}
 
-	public Shape getEditedShape() {
+	public MyShape getEditedShape() {
 		return editedShape;
 	}
 }
